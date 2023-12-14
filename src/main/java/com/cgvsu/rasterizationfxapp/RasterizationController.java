@@ -3,13 +3,17 @@ package com.cgvsu.rasterizationfxapp;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import com.cgvsu.rasterization.*;
 import javafx.scene.paint.Color;
 
 public class RasterizationController {
+    private Triangle triangle = new Triangle(400, 100, 100, 400, 600, 500);
 
+    private Vector2f vertToMove = triangle.v1();
     @FXML
     AnchorPane anchorPane;
     @FXML
@@ -20,8 +24,42 @@ public class RasterizationController {
         anchorPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
         anchorPane.prefHeightProperty().addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
 
-        Rasterization.drawRectangle(canvas.getGraphicsContext2D(), 200, 300, 200, 100, Color.CHOCOLATE);
-        Rasterization.drawRectangle(canvas.getGraphicsContext2D(), 250, 250, 50, 200, Color.AQUA);
+        triangle.drawTriangle(canvas.getGraphicsContext2D());
+    }
+
+    public void handleMouse(MouseEvent e) {
+        if (e.isPrimaryButtonDown()) {
+            vertToMove.set((float) e.getSceneX(), (float) e.getSceneY());
+            redrawTriangle();
+        }
+    }
+
+    public void handleKey(KeyEvent e) {
+        if (e.getEventType() == KeyEvent.KEY_PRESSED) {
+            switch (e.getCode()) {
+                case SPACE -> {
+                    //triangle.randomizeVertices((float) canvas.getWidth(), (float) canvas.getHeight());
+                    redrawTriangle();
+                }
+                case Q -> {
+                    //triangle.resetColors();
+                    redrawTriangle();
+                }
+                case W -> {
+                    //triangle.randomizeColors();
+                    redrawTriangle();
+                }
+            }
+            switch (e.getText()) {
+                case "1" -> vertToMove = triangle.v1();
+                case "2" -> vertToMove = triangle.v2();
+                case "3" -> vertToMove = triangle.v3();
+            }
+        }
+    }
+    private void redrawTriangle() {
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        triangle.drawTriangle(canvas.getGraphicsContext2D());
     }
 
 }
