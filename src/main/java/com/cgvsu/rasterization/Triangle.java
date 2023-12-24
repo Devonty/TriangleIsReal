@@ -15,7 +15,7 @@ public class Triangle {
     private Color c2 = DEFAULT_COLOR_2;
     private Color c3 = DEFAULT_COLOR_3;
 
-    public Triangle( Vector2f v1, Vector2f v2, Vector2f v3, Color c1,  Color c2, Color c3) {
+    public Triangle(Vector2f v1, Vector2f v2, Vector2f v3, Color c1, Color c2, Color c3) {
         this.v1 = v1;
         this.v2 = v2;
         this.v3 = v3;
@@ -35,13 +35,12 @@ public class Triangle {
         this(new Vector2f(x1, y1), new Vector2f(x2, y2), new Vector2f(x3, y3));
     }
 
-    public void drawTriangle(GraphicsContext graphicsContext){
+    public void drawTriangle(GraphicsContext graphicsContext) {
         TriangleRasterization.drawTriangle(graphicsContext, this);
     }
 
 
-
-    public void setDefaultColors(){
+    public void setDefaultColors() {
         c1 = DEFAULT_COLOR_1;
         c2 = DEFAULT_COLOR_2;
         c3 = DEFAULT_COLOR_3;
@@ -69,5 +68,11 @@ public class Triangle {
 
     public Color c3() {
         return c3;
+    }
+
+    public void randomizeColors() {
+        c1 = MyColorUtils.getRandColor();
+        c2 = MyColorUtils.getRandColor();
+        c3 = MyColorUtils.getRandColor();
     }
 }

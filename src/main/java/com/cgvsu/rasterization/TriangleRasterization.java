@@ -78,7 +78,7 @@ public class TriangleRasterization {
             }
 
             for (int x = xL; x <= xR; x++) {
-                pw.setColor(x, y,  interpolateColor(x,y, v1,c1,v2,c2,v3,c3));
+                pw.setColor(x, y, interpolateColor(x, y, v1, c1, v2, c2, v3, c3));
             }
         }
     }
@@ -107,7 +107,7 @@ public class TriangleRasterization {
             }
 
             for (int x = xL; x <= xR; x++) {
-                pw.setColor(x, y, interpolateColor(x,y, v1,c1,v2,c2,v3,c3));
+                pw.setColor(x, y, interpolateColor(x, y, v1, c1, v2, c2, v3, c3));
             }
         }
     }
@@ -127,9 +127,11 @@ public class TriangleRasterization {
         float yy3 = y - v3.y();
 
 
-       float alpha = (y2y3 * xx3 + x3x2 * yy3) / (y2y3 * x1x3 + x3x2 * y1y3);
-       float betta = (y3y1 * xx3 + x1x3 * yy3) / (y2y3 * x1x3 + x3x2 * y1y3);
-       float gamma = 1f - betta - alpha;
+        float alpha = (y2y3 * xx3 + x3x2 * yy3) / (y2y3 * x1x3 + x3x2 * y1y3);
+        float betta = (y3y1 * xx3 + x1x3 * yy3) / (y2y3 * x1x3 + x3x2 * y1y3);
+        float gamma = 1f - betta - alpha;
+
+        // На этом моменте барицентрики можно передавать для наложения текстур, вместо интерполяции цвета
 
         float red = (float) (alpha * c1.getRed() + betta * c2.getRed() + gamma * c3.getRed());
         float green = (float) (alpha * c1.getGreen() + betta * c2.getGreen() + gamma * c3.getGreen());
@@ -138,8 +140,8 @@ public class TriangleRasterization {
         red = Math.max(0f, Math.min(1f, red));
         green = Math.max(0f, Math.min(1f, green));
         blue = Math.max(0f, Math.min(1f, blue));
-
         return Color.color(red, green, blue);
     }
+
 
 }

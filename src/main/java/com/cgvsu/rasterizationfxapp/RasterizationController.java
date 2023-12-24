@@ -37,16 +37,12 @@ public class RasterizationController {
     public void handleKey(KeyEvent e) {
         if (e.getEventType() == KeyEvent.KEY_PRESSED) {
             switch (e.getCode()) {
-                case SPACE -> {
-                    //triangle.randomizeVertices((float) canvas.getWidth(), (float) canvas.getHeight());
-                    redrawTriangle();
-                }
                 case Q -> {
-                    //triangle.resetColors();
+                    triangle.setDefaultColors();
                     redrawTriangle();
                 }
                 case W -> {
-                    //triangle.randomizeColors();
+                    triangle.randomizeColors();
                     redrawTriangle();
                 }
             }
